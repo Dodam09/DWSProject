@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dws.user.dw.dao.SearcherDAO">
+		
+	<select id="searcherList" resultType="searcher">
+		SELECT *
+		FROM (
+		    SELECT 
+		       <![CDATA[ @rownum := @rownum + 1 AS rnum]]>,
+		        A.*
+		    FROM (
+		        SELECT 
+		            TB_DW.w_no,
+		            TB_DW.w_day, 
+		            TB_DW.w_price,
+		            TB_WORKERS.wor_name, 
+		            TB_WORKERS.wor_major, 
+		            TB_WORKERS.wor_want,
+		            TB_WORKERS.wor_birth,
+		            TB_WORKERS.wor_address,
+		            TB_WORKERS.wor_phone, 
+		            TB_COMPANYS.com_name,
+		            TB_COMPANYS.com_major
+		        FROM 
+		            TB_DW
+		        INNER JOIN 
+		            TB_WORKERS
+		        ON 
+		            TB_DW.wor_name = TB_WORKERS.wor_name
+		        INNER JOIN 
+		            TB_COMPANYS
+		        ON 
+		            TB_DW.com_name = TB_COMPANYS.com_name
+		        ORDER BY w_no ASC 
+		    ) A
+		    	CROSS JOIN (SELECT<![CDATA[ @rownum := 0]]>) AS t
+			) AS B
+		WHERE B.rnum BETWEEN #{start} AND #{end}
+		
+	</select>
+		
+	<select id="searcherSearch" resultType="searcher">
+		
+		SELECT *
+		FROM (
+		    SELECT 
+		       <![CDATA[ @rownum := @rownum + 1 AS rnum]]>,
+		        A.*
+		    FROM (
+		        SELECT 
+		            TB_DW.w_no,
+		            TB_DW.w_day, 
+		            TB_DW.w_price,
+		            TB_WORKERS.wor_name, 
+		            TB_WORKERS.wor_major, 
+		            TB_WORKERS.wor_want,
+		            TB_WORKERS.wor_birth,
+		            TB_WORKERS.wor_address,
+		            TB_WORKERS.wor_phone, 
+		            TB_COMPANYS.com_name,
+		            TB_COMPANYS.com_major
+		        FROM 
+		            TB_DW
+		        INNER JOIN 
+		            TB_WORKERS
+		        ON 
+		            TB_DW.wor_name = TB_WORKERS.wor_name
+		        INNER JOIN 
+		            TB_COMPANYS
+		        ON 
+		            TB_DW.com_name = TB_COMPANYS.com_name
+	            WHERE 
+	            	TB_WORKERS.wor_name = #{wor_name}
+            	ORDER BY RAND()
+            	LIMIT 40
+		    ) A
+		    	CROSS JOIN (SELECT<![CDATA[ @rownum := 0]]>) AS t
+			) AS B
+			ORDER BY w_day ASC
+			
+			
+	</select>
+	
+	
+	
+	<select id="countSearcher" resultType="int">
+		SELECT COUNT(*)
+		        FROM (
+					SELECT 
+					    TB_DW.w_no,
+					    TB_DW.w_day, 
+					    TB_DW.w_price,
+					    TB_WORKERS.wor_name, 
+					    TB_WORKERS.wor_major, 
+					    TB_WORKERS.wor_want,
+					    TB_WORKERS.wor_birth,  
+					    TB_COMPANYS.com_name,
+					    TB_COMPANYS.com_major
+				    FROM 
+				    	TB_DW
+				    INNER JOIN 
+				    	TB_WORKERS
+				    ON 
+				    	TB_DW.wor_name = TB_WORKERS.wor_name
+				    INNER JOIN 
+				    	TB_COMPANYS
+				    ON 
+				    	TB_DW.com_name = TB_COMPANYS.com_name
+			    	ORDER BY w_no ASC 
+		        ) A
+	</select>
+
+</mapper>

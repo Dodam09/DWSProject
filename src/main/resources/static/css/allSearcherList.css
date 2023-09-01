@@ -1,0 +1,64 @@
+			th{
+				text-align: center;
+				border-right : 1px solid black;
+				width : 15%
+				
+			}
+			#searcherContainer,#dwContainer{
+				
+				display: flex;
+				justify-content:center;
+				/* border : 1px solid black; */
+
+			}
+			#searcherTable,#dwTable{
+				width: 100%;
+				border : 1px solid black;
+				text-align: center;
+				
+			}
+			#searcherTable td{
+				font-weight: bolder;
+				color: blue;
+				font-size: 30px;
+			}
+			#searcherTable{
+				margin-bottom: 30px;
+			}
+			
+			
+			#addCon{
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			#addBtnDiv{
+				width: 50%;
+				display: flex;
+				justify-content: center;
+				margin-bottom: 20px;
+				font-weight: bolder;
+			}
+			#menuDiv{
+				width: 80%;
+				display: flex;
+				justify-content: center;
+				margin-bottom: 20px;
+				font-weight: bolder;
+			}
+			#dwListBtn{
+				margin-bottom:20px;
+				font-weight: bold;
+			}
+			#search{
+				font-weight:bolder;
+			
+			}
+			#allListBtn{
+				margin-left: 10px;
+			}
+			.Abtn{
+				margin-left : 10px;
+				margin-bottom : 10px;
+			}

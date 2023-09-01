@@ -1,0 +1,66 @@
+			th{
+				text-align: center;
+				border-right : 1px solid black;
+				width : 15%
+				
+			}
+			#offerContainer,#dwContainer{
+				
+				display: flex;
+				justify-content:center;
+				/* border : 1px solid black; */
+
+			}
+			#offerTable,#dwTable{
+				width: 100%;
+				border : 1px solid black;
+				text-align: center;
+				
+			}
+			#offerTable td{
+				font-weight: bolder;
+				color: blue;
+				font-size: 30px;
+			}
+			#offerTable{
+				margin-bottom: 30px;
+			}
+			
+			
+			#addCon{
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			#addBtnDiv{
+				width: 80%;
+				display: flex;
+				justify-content: center;
+				margin-bottom: 20px;
+				font-weight: bolder;
+				
+			}
+			#menuDiv{
+				width: 80%;
+				display: flex;
+				justify-content: center;
+				margin-bottom: 20px;
+				font-weight: bolder;
+			}
+			#search{
+				font-weight:bolder;
+			
+			}
+			
+			#allListBtn{
+				margin-left: 10px;
+			}
+				
+			.Abtn{
+				margin-left : 10px;
+				margin-bottom : 10px;
+			}
+			td#phone{
+			font-size: 20px;
+			}

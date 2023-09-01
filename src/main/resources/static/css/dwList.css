@@ -1,0 +1,61 @@
+	
+		
+			th{
+				text-align: center;
+				border-right : 1px solid black;
+				/*width : 15%;*/
+				
+			}
+			#dwContainer{
+				
+				display: flex;
+				justify-content:center;
+				/* border : 1px solid black; */
+
+			}
+			#dwTable{
+				width: 100%;
+				font-size: 15px;
+				border : 1px solid black;
+				text-align: center;
+				margin-bottom: 10px;
+				
+			}
+				
+			
+			
+			#addCon{
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			#addBtnDiv{
+				width: 80%;
+				display: flex;
+				justify-content: center;
+				margin-bottom: 20px;
+				font-weight: bolder;
+			}
+			#menuDiv{
+				width: 80%;
+				display: flex;
+				justify-content: center;
+				margin-bottom: 20px;
+				font-weight: bolder;
+			}
+			
+			#search{
+				font-weight:bolder;
+			
+			}
+			#dwListBtn{
+				margin-bottom:20px;
+				font-weight: bold;
+			}
+			.Abtn{
+				margin-left : 10px;
+			}
+			#page{
+				margin-bottom : 20px;
+			}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dws.user.dw.dao.OfferDAO">
+		
+		
+	<select id="searchOffer" resultType="offer" >
+	  
+	       
+		SELECT 
+		    A.w_no,
+		    A.w_day,
+		    A.w_price, 
+		    A.wor_name, 
+		    A.wor_major, 
+		    A.com_name,
+		    A.com_major,
+		    A.com_address,
+		    A.com_phone
+		FROM (
+		    SELECT 
+		        TB_DW.w_no,
+		        TB_DW.w_day,
+		        TB_DW.w_price, 
+		        TB_WORKERS.wor_name, 
+		        TB_WORKERS.wor_major, 
+		        TB_COMPANYS.com_name,
+		        TB_COMPANYS.com_major,
+		        TB_COMPANYS.com_address,
+		        TB_COMPANYS.com_phone
+		    FROM 
+		        TB_DW
+		    INNER JOIN 
+		        TB_WORKERS
+		    ON 
+		        TB_DW.wor_name = TB_WORKERS.wor_name
+		    INNER JOIN 
+		        TB_COMPANYS
+		    ON 
+		        TB_DW.com_name = TB_COMPANYS.com_name
+		    WHERE 
+		        TB_COMPANYS.com_name = #{com_name}
+		    ORDER BY RAND()
+		    LIMIT 40
+		) A
+		ORDER BY w_day ASC
+		
+		
+	</select>
+
+    
+	
+		
+		<select id="countOffer" resultType="int">
+			SELECT COUNT(*) 
+			    FROM (
+					SELECT 
+					    TB_DW.w_no,
+					    TB_DW.w_day,
+					    TB_DW.w_price, 
+					    TB_WORKERS.wor_name, 
+					    TB_WORKERS.wor_major, 
+					    TB_COMPANYS.com_name,
+					    TB_COMPANYS.com_major,
+					    TB_COMPANYS.com_address,
+					    TB_COMPANYS.com_phone
+					FROM 
+					    TB_DW
+					INNER JOIN 
+					    TB_WORKERS
+					ON 
+					    TB_DW.wor_name = TB_WORKERS.wor_name
+					INNER JOIN 
+					    TB_COMPANYS
+					ON 
+					    TB_DW.com_name = TB_COMPANYS.com_name
+			    ) AS B
+			</select>
+			
+				
+	
+		
+		<!-- 페이징 처리 후 게시글 조회 -->
+		<select id="offerList" resultType="offer" parameterType="paging">
+			SELECT 
+			     *
+				FROM (
+				    SELECT 
+				        <![CDATA[@rownum := @rownum + 1 AS rnum ]]>,
+				        TB_DW.w_no,
+				        TB_DW.w_day,
+				        TB_DW.w_price, 
+				        TB_WORKERS.wor_name, 
+				        TB_WORKERS.wor_major, 
+				        TB_COMPANYS.com_name,
+				        TB_COMPANYS.com_major
+				    FROM 
+				        TB_DW
+				    INNER JOIN 
+				        TB_WORKERS
+				    ON 
+				        TB_DW.wor_name = TB_WORKERS.wor_name
+				    INNER JOIN 
+				        TB_COMPANYS
+				    ON 
+				        TB_DW.com_name = TB_COMPANYS.com_name
+				    CROSS JOIN (SELECT <![CDATA[ @rownum := 0]]> ) AS t
+				   
+				) A
+			WHERE <![CDATA[rnum]]> BETWEEN #{start} AND #{end}
+	   		 
+		</select>
+		
+		
+
+</mapper>

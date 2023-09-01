@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+	
+		<typeAlias type="com.dws.user.dw.vo.WorkersVO" alias="workers" />
+		<typeAlias type="com.dws.user.dw.vo.CompanysVO" alias="companys" />
+		<typeAlias type="com.dws.user.dw.vo.DWListVO" alias="dwList" />
+		<typeAlias type="com.dws.user.dw.vo.OfferVO" alias="offer" />
+		<typeAlias type="com.dws.user.dw.vo.SearcherVO" alias="searcher" />
+		<typeAlias type="com.dws.user.dw.util.PagingVO" alias="paging" />
+		<typeAlias type="com.dws.user.dw.util.OfferSearchVO" alias="OfferSearchVO" />
+		<typeAlias type="com.dws.user.dw.vo.TestVO" alias="tests" />
+		
+		
+	</typeAliases>
+	
+	
+
+</configuration>
