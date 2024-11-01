@@ -6,22 +6,12 @@
 	<select id="countDw" resultType="int">
 		SELECT COUNT(*) FROM TB_DW
 	</select>
-	
-	
-	
 	<!-- 페이징 처리 후 게시글 조회 -->
 	<select id="dwList" resultType="dwList" parameterType="paging">
 	SELECT *
 	FROM TB_DW
 	ORDER BY w_no ASC
 	LIMIT #{start}, #{end_minus_start_plus_1};
- 
-    
-    
-    
-    
-	   
-
 	</select>
 	
 	

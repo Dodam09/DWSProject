@@ -24,6 +24,12 @@
 	</properties>
 	
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		
 		<!--데이터 베이스 상호작용 -->
 		<dependency>
@@ -179,6 +185,7 @@
 		</dependency>
 
 	</dependencies>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -195,4 +202,6 @@
 			</plugin>
 		</plugins>
 	</build> 
+	
+
 </project>
