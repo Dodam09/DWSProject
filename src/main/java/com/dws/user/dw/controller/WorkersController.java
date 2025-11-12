@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,31 +24,27 @@ import com.dws.user.dw.vo.WorkersVO;
 import com.dws.user.dw.vo.SearcherVO;
 import com.dws.user.dw.vo.TestVO;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping(value="/user/*")
 @Slf4j
+@RequestMapping("/user/*")
+@RequiredArgsConstructor   // ★ 생성자 자동 생성 + 주입
 public class WorkersController {
 	//거래완료
 	
-	@Setter(onMethod_ = @Autowired)
 	private WorkersService workersService;
 	
-	@Setter(onMethod_ = @Autowired )
 	private CompanysService companysService;
 	
-	@Setter(onMethod_ = @Autowired )
 	private DWListService dwListService;
 	
-	@Setter(onMethod_ = @Autowired )
 	private OfferService offerService;
 	
-	@Setter(onMethod_ = @Autowired )
 	private SearcherService searcherService;
 	
-	@Setter(onMethod_ = @Autowired )
 	private TestService testService;
 	
 	

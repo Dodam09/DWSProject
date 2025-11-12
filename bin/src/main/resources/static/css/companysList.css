@@ -1,0 +1,48 @@
+			th{
+				text-align: center;
+				border-right : 1px solid black;
+				width : 15%
+				
+			}
+			#companysContainer{
+				
+				display: flex;
+				justify-content:center;
+				/* border : 1px solid black; */
+
+			}
+			#companysTable{
+				width: 100%;
+				font-size: 15px;
+				border : 1px solid black;
+				text-align: center;
+			}
+			
+			
+			#addCon{
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			#addBtnDiv{
+				width: 80%;
+				display: flex;
+				justify-content: center;
+				margin-bottom: 20px;
+				font-weight: bolder;
+			}
+			#addBtn{
+				width: 100px;				
+				height: 30px;
+				font-size: 20px;
+				font-weight: bold;
+				margin-bottom: 10px;
+			}
+			#dwListBtn{
+				margin-bottom:20px;
+				font-weight: bold;
+			}
+			.Abtn{
+				margin-left : 10px;
+			}
