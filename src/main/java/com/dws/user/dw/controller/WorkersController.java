@@ -58,9 +58,9 @@ public class WorkersController {
 	public String Test(Model model) {
 		log.info("TEST 메서드 실행");
 		
-		List<TestVO> tvo = testService.test(); 
-		
-		model.addAttribute("tvo",tvo);
+//		List<TestVO> tvo = testService.test(); 
+//		
+//		model.addAttribute("tvo",tvo);
 		
 		return "user/testForm";
 	}
