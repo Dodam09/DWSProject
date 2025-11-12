@@ -19,6 +19,7 @@
       box-sizing: border-box;
       padding: 8mm 8mm 6mm 8mm;
       background: #f7fbff;
+      margin: 0px auto;
     }
 
     .title {
