@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(value="/user/*")
 @Slf4j
 public class WorkersController {
+	//거래완료
 	
 	@Setter(onMethod_ = @Autowired)
 	private WorkersService workersService;
