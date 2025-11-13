@@ -43,6 +43,21 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		
+    <!-- ... 기존 의존성들 ... -->
+
+    <!-- 엑셀 처리용 Apache POI -->
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>5.2.5</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>5.2.5</version>
+    </dependency>
+
+		
 		<!--웹기반-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

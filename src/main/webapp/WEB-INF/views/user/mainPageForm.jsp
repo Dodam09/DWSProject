@@ -71,7 +71,20 @@
         <a class="btn-link" href="<c:url value='/user/test'/>">
             TEST 페이지
         </a>
+        
     </div>
+    <div style="margin-top: 40px;">
+    <h2>작업일보 엑셀 업로드</h2>
+    <form action="<c:url value='/user/uploadDwExcel'/>"
+          method="post"
+          enctype="multipart/form-data">
+        <input type="file" name="file" accept=".xlsx,.xls"/>
+        <button type="submit">업로드해서 미리보기</button>
+    </form>
+    <p style="margin-top: 8px; font-size: 13px; color: #666;">
+    </p>
+</div>
+    
 </div>
 </body>
 </html>

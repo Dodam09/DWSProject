@@ -1,13 +1,16 @@
 package com.dws.user.dw.controller;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dws.user.dw.service.CompanysService;
 import com.dws.user.dw.service.DWListService;
@@ -25,6 +28,13 @@ import com.dws.user.dw.vo.WorkersVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.apache.poi.ss.usermodel.*;
+
+
 @Controller
 @Slf4j
 @RequestMapping("/user/*")
@@ -37,6 +47,141 @@ public class WorkersController {
     private final OfferService offerService;
     private final SearcherService searcherService;
     private final TestService testService;
+    
+    
+ // ===================== 작업일보 엑셀 업로드 =====================
+
+    @PostMapping("uploadDwExcel")
+    public String uploadDwExcel(@RequestParam("file") MultipartFile file,
+                                Model model) {
+        log.info("uploadDwExcel 실행 - 파일명: {}", file.getOriginalFilename());
+
+        List<DWListVO> excelList = new ArrayList<>();
+
+        if (file.isEmpty()) {
+            model.addAttribute("message", "파일이 비어 있습니다.");
+            return "user/dwExcelPreviewForm";
+        }
+
+        try (InputStream is = file.getInputStream();
+             Workbook workbook = WorkbookFactory.create(is)) {
+
+            Sheet sheet = workbook.getSheetAt(0); // 첫 번째 시트
+
+            // 엑셀 구조 상, 앞부분에 제목/주소/전화 등이 있어서
+            // "실제 데이터가 있는 행만" 골라서 처리하는 방식으로 갑니다.
+            for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if (row == null) continue;
+
+                Cell dateCell = row.getCell(0);
+                Cell nameCell = row.getCell(2);
+                Cell companyCell = row.getCell(3);
+
+                // 날짜, 이름, 업체가 모두 비어있으면 데이터 아님 → skip
+                if (isEmptyCell(dateCell) && isEmptyCell(nameCell) && isEmptyCell(companyCell)) {
+                    continue;
+                }
+
+                DWListVO vo = new DWListVO();
+
+                // 1) 날짜
+                if (dateCell != null && dateCell.getCellType() != CellType.BLANK) {
+                    if (DateUtil.isCellDateFormatted(dateCell)) {
+                        LocalDate date = dateCell.getLocalDateTimeCellValue().toLocalDate();
+                        // vo.setWorkDate(date);  // DWListVO 필드 이름에 맞게 수정
+                    } else {
+                        // 날짜가 텍스트로 들어온 경우 대비
+                        String dateStr = getString(dateCell);
+                        // vo.setWorkDateStr(dateStr);
+                    }
+                }
+
+                // 2) 요일
+                vo.setDw_week(getString(row.getCell(1))); // 예: 수, 목
+
+                // 3) 이름
+                vo.setDw_name(getString(row.getCell(2)));
+
+                // 4) 업체명
+                vo.setDw_company(getString(row.getCell(3)));
+
+                // 5) 일수 (숫자)
+                vo.setDw_days(getInt(row.getCell(4)));
+
+                // 6) 직종 (전공/조공)
+                vo.setDw_position(getString(row.getCell(5)));
+
+                // 7) 일당 (숫자)
+                vo.setDw_pay(getInt(row.getCell(6)));
+
+                // 8) 입금 방식 (개인직수, 사무실입금 등)
+                vo.setDw_payType(getString(row.getCell(7)));
+
+                // 9) 비고 ("/완료", "/2/10완료" 등)
+                vo.setDw_memo(getString(row.getCell(8)));
+
+                excelList.add(vo);
+            }
+
+        } catch (Exception e) {
+            log.error("엑셀 파싱 중 오류", e);
+            model.addAttribute("message", "엑셀 파일을 읽는 중 오류가 발생했습니다: " + e.getMessage());
+            return "user/dwExcelPreviewForm";
+        }
+
+        log.info("엑셀에서 읽은 건수: {}", excelList.size());
+
+        model.addAttribute("excelList", excelList);
+        return "user/dwExcelPreviewForm";  // 미리보기용 JSP
+    }
+
+    // ======= 엑셀 파싱용 유틸 메서드들 =======
+
+    private boolean isEmptyCell(Cell cell) {
+        if (cell == null) return true;
+        if (cell.getCellType() == CellType.BLANK) return true;
+        String s = getString(cell);
+        return (s == null || s.trim().isEmpty());
+    }
+
+    private String getString(Cell cell) {
+        if (cell == null) return "";
+        return switch (cell.getCellType()) {
+            case STRING -> cell.getStringCellValue();
+            case NUMERIC -> {
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    // 날짜를 문자열로 쓰고 싶으면 여기서 포맷
+                    yield cell.getLocalDateTimeCellValue().toLocalDate().toString();
+                } else {
+                    // 정수처럼 보이게
+                    double d = cell.getNumericCellValue();
+                    long l = (long) d;
+                    if (l == d) yield String.valueOf(l);
+                    else yield String.valueOf(d);
+                }
+            }
+            case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
+            case FORMULA -> cell.getCellFormula();
+            default -> "";
+        };
+    }
+
+    private Integer getInt(Cell cell) {
+        if (cell == null) return null;
+        try {
+            if (cell.getCellType() == CellType.NUMERIC) {
+                return (int) cell.getNumericCellValue();
+            } else {
+                String s = getString(cell);
+                if (s == null || s.isBlank()) return null;
+                return Integer.parseInt(s.replace(",", "").trim());
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
  // ===================== 메인 페이지 =====================
 
