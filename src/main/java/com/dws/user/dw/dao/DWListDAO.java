@@ -16,4 +16,8 @@ public interface DWListDAO {
 
 	// 페이징 처리 게시글 조회
 	public ArrayList<DWListVO> dwList(PagingVO vo);
+	
+
+    void insert(DWListVO vo);           // 작업일보 저장
+
 }

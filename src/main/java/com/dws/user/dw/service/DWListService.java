@@ -1,7 +1,10 @@
 package com.dws.user.dw.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.dws.user.dw.dto.DailyWorkExcelRow;
+import com.dws.user.dw.dto.ExcelUploadResult;
 import com.dws.user.dw.util.PagingVO;
 import com.dws.user.dw.vo.DWListVO;
 
@@ -14,4 +17,6 @@ public interface DWListService {
 
 	// 페이징 처리 게시글 조회
 	public ArrayList<DWListVO> dwList(PagingVO vo);
+	
+	  ExcelUploadResult saveFromExcel(List<DailyWorkExcelRow> rows);
 }

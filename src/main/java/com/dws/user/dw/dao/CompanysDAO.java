@@ -13,5 +13,11 @@ public interface CompanysDAO {
 	public ArrayList<CompanysVO> comList(PagingVO vo);
 
 	public int countCom();
+	
+
+	    CompanysVO findByName(String name); // 회사명으로 회사 조회
+
+	    void insert(CompanysVO vo);         // 회사 신규 등록
+
 
 }

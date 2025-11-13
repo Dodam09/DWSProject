@@ -15,4 +15,8 @@ public interface WorkersDAO {
 
 	public int countWor();
 	
+	 WorkersVO findByName(String name);  // 이름으로 근무자 조회
+
+    void insert(WorkersVO vo);          // 근무자 신규 등록
+	
 }
