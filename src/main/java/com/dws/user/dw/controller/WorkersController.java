@@ -38,8 +38,18 @@ public class WorkersController {
     private final SearcherService searcherService;
     private final TestService testService;
 
+ // ===================== 메인 페이지 =====================
+
+    @GetMapping("main")
+    public String mainPage() {
+        log.info("mainPage 실행");
+        return "user/mainPageForm";   // /WEB-INF/views/user/mainPageForm.jsp 이런 식으로 매핑되겠죠?
+    }
+    
+    
     // ===================== TEST =====================
 
+    
     @GetMapping("test")
     public String Test(Model model) {
         log.info("TEST 메서드 실행");

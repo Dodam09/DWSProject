@@ -109,7 +109,5 @@
 			WHERE <![CDATA[rnum]]> BETWEEN #{start} AND #{end}
 	   		 
 		</select>
-		
-		
 
 </mapper>
